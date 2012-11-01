@@ -1,4 +1,9 @@
 from setuptools import setup, find_packages
+try:
+    # http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage
+    from multiprocessing import util # pyflakes.ignore
+except ImportError:
+    pass
 
 setup(
     name='Flask-Misaka',
@@ -13,6 +18,7 @@ setup(
         'Flask>=0.7',
         'misaka',
     ],
+    test_suite='nose.collector',
     tests_require=[
         'nose>=1.0'
     ],
@@ -24,5 +30,4 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    test_suite='nose.collector'
 )
