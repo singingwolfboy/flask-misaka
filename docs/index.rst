@@ -50,7 +50,7 @@ and have Jinja dynamically interpret it for you!
 
 
 API
-===
+---
 .. autofunction:: markdown
 
 .. autoclass:: Misaka
