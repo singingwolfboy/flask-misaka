@@ -69,7 +69,7 @@ def make_flags(**options):
 def markdown(text, **options):
     """
     Parses the provided Markdown-formatted text into valid HTML, and returns
-    it as a :class:`Markup` instance.
+    it as a :class:`flask.Markup` instance.
     """
     ext, rndr = make_flags(**options)
     return Markup(misaka.html(text, extensions=ext, render_flags=rndr))
@@ -77,11 +77,21 @@ def markdown(text, **options):
 
 class Misaka(object):
     def __init__(self, app=None, **defaults):
+        """
+        Set the default options for the :meth:`render` method. If you want
+        the ``markdown`` template filter to use options, set them here.
+        """
         self.defaults = defaults
         if app:
             app.jinja_env.filters.setdefault('markdown', self.render)
 
     def render(self, text, **overrides):
+        """
+        Proxies to the :func:`markdown` function, automatically passing any
+        defaults set in the :meth:`__init__` method (or overriding them).
+
+        The ``markdown`` template filter calls this method.
+        """
         options = self.defaults
         if overrides:
             options = copy(options)
