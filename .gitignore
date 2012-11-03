@@ -1,2 +1,12 @@
 *.pyc
 *.DS_Store
+.Python
+*.egg
+*.egg-info
+bin
+build
+dist
+docs/_build
+include
+lib
+man
