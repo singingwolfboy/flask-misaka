@@ -4,7 +4,7 @@ Flask-Misaka
 .. module:: flask.ext.misaka
 
 Flask-Misaka provides a pleasant interface between the `Flask`_ web framework
-and the `Misaka`_ `Markdown`_ parser. [#sundown]_
+and the `Misaka`_ `Markdown`_ parser. [#technically]_
 
 Installation
 ------------
@@ -40,7 +40,7 @@ You can pass variables in your template through it:
   {{ text|markdown }}
 
 Or, you can use the ``filter`` tag to write your template directly in Markdown
-and have Jinja dynamically interpret it for you! That&#39;s right!
+and have Jinja dynamically interpret it for you!
 
 .. code-block:: jinja
 
@@ -53,12 +53,15 @@ API
 ===
 .. autofunction:: markdown
 
+.. autoclass:: Misaka
+   :members: __init__, render
+
 Options
 -------
 Misaka is very customizable, and `supports many Markdown extensions
 <http://misaka.61924.nl/api/>`_. Flask-Misaka provides a nicer API for these
-extensions. Any function or method that accepts ``**options`` or ``**overrides``
-accepts the following boolean arguments, all of which default to False:
+extensions. All functions in the public API accept the following boolean
+arguments, all of which default to False:
 
 +-----------------------+-------------------------------------------------------+
 | Option Name           | Description                                           |
@@ -96,7 +99,40 @@ accepts the following boolean arguments, all of which default to False:
 +-----------------------+-------------------------------------------------------+
 | ``escape``            | Escape all HTML tags, regardless of what they are.    |
 +-----------------------+-------------------------------------------------------+
+| ``hard_wrap`` *or*    | Insert HTML ``<br>`` tags inside on paragraphs where  |
+| ``wrap``              | the origin Markdown document had newlines (by         |
+|                       | default, Markdown ignores these newlines).            |
++-----------------------+-------------------------------------------------------+
+| ``safelink``          | Only generate links for protocols which are           |
+|                       | considered safe.                                      |
++-----------------------+-------------------------------------------------------+
+| ``skip_html`` *or*    | Do not allow any user-inputted HTML in the output.    |
+| ``no_html``           |                                                       |
++-----------------------+-------------------------------------------------------+
+| ``skip_images`` *or*  | Do not generate any ``<img>`` tags.                   |
+| ``no_images``         |                                                       |
++-----------------------+-------------------------------------------------------+
+| ``skip_links`` *or*   | Do not generate any ``<a>`` tags.                     |
+| ``no_links``          |                                                       |
++-----------------------+-------------------------------------------------------+
+| ``skip_style`` *or*   | Do not generate any <style> tags.                     |
+| ``no_style``          |                                                       |
++-----------------------+-------------------------------------------------------+
+| ``smartypants``       | Post-process rendered markdown text with              |
+|                       | `SmartyPants`_.                                       |
++-----------------------+-------------------------------------------------------+
+| ``toc`` *or*          | Render a table of contents.                           |
+| ``toc_tree``          |                                                       |
++-----------------------+-------------------------------------------------------+
+| ``use_xhtml`` *or*    | Output XHTML-conformant tags.                         |
+| ``xhtml``             |                                                       |
++-----------------------+-------------------------------------------------------+
 
+Any option that starts with ``no_`` can also be passed as it's inverse set to
+False. For example, ``no_html=True`` and ``html=False`` have exactly the same
+effect. If there is a conflict as to whether an option should be enabled
+(such as if you pass both ``html=True`` and ``no_html=True``), the option will
+be enabled.
 
 .. _Flask: http://flask.pocoo.org/
 .. _Jinja2: http://jinja.pocoo.org/
@@ -104,8 +140,9 @@ accepts the following boolean arguments, all of which default to False:
 .. _Markdown: http://en.wikipedia.org/wiki/Markdown
 .. _Sundown: https://github.com/vmg/sundown
 .. _PHP-Markdown tables: http://michelf.com/projects/php-markdown/extra/#table
+.. _SmartyPants: http://daringfireball.net/projects/smartypants/
 
 .. rubric:: Footnotes
-.. [#sundown]
+.. [#technically]
   (Technically, `Misaka`_ is just a Python binding to the `Sundown`_ library,
   which is written in C.)
