@@ -19,7 +19,7 @@ Usage
 ----------
 Just import the :func:`markdown` function and use it!
 
-  >>> from flaskext.misaka import markdown
+  >>> from flask.ext.misaka import markdown
   >>> markdown("A *simple* example.")
   Markup(u'<p>A <em>simple</em> example.</p>\n')
 
@@ -27,7 +27,7 @@ To use Markdown in your templates, you just need to import the :class:`Misaka`
 class and wrap your Flask instance with it::
 
   from flask import Flask
-  from flaskext.misaka import Misaka
+  from flask.ext.misaka import Misaka
 
   app = Flask(__name__)
   Misaka(app)
