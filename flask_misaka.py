@@ -27,8 +27,6 @@ ALIAS_EXT = {
 
 ALIAS_RENDER = {
     'escape': HTML_ESCAPE,
-    'expand_tabs': HTML_EXPAND_TABS,
-    'expandtab': HTML_EXPAND_TABS,
     'hard_wrap': HTML_HARD_WRAP,
     'wrap': HTML_HARD_WRAP,
     'safelink': HTML_SAFELINK,
@@ -68,16 +66,25 @@ def make_flags(**options):
     return ext, rndr
 
 
+def markdown(text, **options):
+    """
+    Parses the provided Markdown-formatted text into valid HTML, and returns
+    it as a :class:`Markup` instance.
+    """
+    ext, rndr = make_flags(**options)
+    return Markup(misaka.html(text, extensions=ext, render_flags=rndr))
+
+
 class Misaka(object):
-    def __init__(self, app=None, **kwargs):
-        self.defaults = kwargs
+    def __init__(self, app=None, **defaults):
+        self.defaults = defaults
         if app:
             app.jinja_env.filters.setdefault('markdown', self.render)
 
-    def render(self, stream, **kwargs):
+    def render(self, text, **overrides):
         options = self.defaults
-        if kwargs:
+        if overrides:
             options = copy(options)
-            options.update(kwargs)
-        ext, rndr = make_flags(**options)
-        return Markup(misaka.html(stream, extensions=ext, render_flags=rndr))
+            options.update(overrides)
+        return markdown(text, **options)
+

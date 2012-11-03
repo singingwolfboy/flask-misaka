@@ -1,4 +1,5 @@
 from flask import Flask, render_template_string
+from unittest import TestCase
 
 from flask.ext.misaka import Misaka
 
@@ -39,23 +40,28 @@ def test_render_in_block():
     resp = client.open('/c')
     assert resp.data == u'<p>This is a <em>markdown</em> block</p>\n'
 
-### markdown extension tests ###
-def test_defaults():
-    md = Misaka()
-    result = md.render("This ~~contains~~ some mark^(down) extensions: "
-        "www.markdown.com foo_bar_baz it's")
-    expected = (u"<p>This ~~contains~~ some mark^(down) extensions: "
-        "www.markdown.com foo<em>bar</em>baz it&#39;s</p>\n")
-    assert result == expected
+class MarkdownExtensionTests(TestCase):
+    def test_defaults(self):
+        md = Misaka()
+        result = md.render("This ~~contains~~ some mark^(down) extensions: "
+            "www.markdown.com foo_bar_baz it's")
+        expected = (u"<p>This ~~contains~~ some mark^(down) extensions: "
+            "www.markdown.com foo<em>bar</em>baz it&#39;s</p>\n")
+        self.assertEqual(result, expected)
 
-def test_strikethrough():
-    md = Misaka(strikethrough=True)
-    result = md.render("That's ~~wrong~~ right!")
-    assert result == u"<p>That&#39;s <del>wrong</del> right!</p>\n"
+    def test_strikethrough(self):
+        md = Misaka(strikethrough=True)
+        result = md.render("That's ~~wrong~~ right!")
+        self.assertEqual(result, u"<p>That&#39;s <del>wrong</del> right!</p>\n")
 
-def test_no_intra_emphasis():
-    md = Misaka(intra_emphasis=False)
-    result = md.render("foo_bar_baz")
-    assert result == u"<p>foo_bar_baz</p>\n"
+    def test_emphasis(self):
+        md = Misaka(strikethrough=True)
+        result = md.render("That's *right!*")
+        self.assertEqual(result, u"<p>That&#39;s <em>right!</em></p>\n")
+
+    def test_no_intra_emphasis(self):
+        md = Misaka(intra_emphasis=False)
+        result = md.render("foo_bar_baz")
+        self.assertEqual(result, u"<p>foo_bar_baz</p>\n")
 
 
