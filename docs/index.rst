@@ -115,7 +115,7 @@ arguments, all of which default to False:
 | ``skip_links`` *or*   | Do not generate any ``<a>`` tags.                     |
 | ``no_links``          |                                                       |
 +-----------------------+-------------------------------------------------------+
-| ``skip_style`` *or*   | Do not generate any <style> tags.                     |
+| ``skip_style`` *or*   | Do not generate any ``<style>`` tags.                 |
 | ``no_style``          |                                                       |
 +-----------------------+-------------------------------------------------------+
 | ``smartypants``       | Post-process rendered markdown text with              |
