@@ -7,7 +7,7 @@ setup(
     license='MIT',
     author='David Baumgold',
     author_email='david@davidbaumgold.com',
-    description='Flask interface to Sundown, a markdown parsing library',
+    description='A pleasant interface between the Flask web framework and the Misaka Markdown parser.',
     packages=find_packages(),
     install_requires=[
         'Flask>=0.7',
