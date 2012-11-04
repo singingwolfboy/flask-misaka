@@ -66,9 +66,6 @@ arguments, all of which default to False:
 +-----------------------+-------------------------------------------------------+
 | Option Name           | Description                                           |
 +=======================+=======================================================+
-| ``no_intra_emphasis`` | Do not parse emphasis inside of words. Strings such   |
-|                       | as ``foo_bar_baz`` will not generate ``<em>`` tags.   |
-+-----------------------+-------------------------------------------------------+
 | ``autolink``          | Parse links even when they are not enclosed in ``<>`` |
 |                       | characters. Autolinks for the http, https and ftp     |
 |                       | protocols will be automatically detected. Email       |
@@ -82,6 +79,9 @@ arguments, all of which default to False:
 +-----------------------+-------------------------------------------------------+
 | ``lax_html`` *or*     | HTML blocks do not require to be surrounded by an     |
 | ``lax_html_blocks``   | empty line as in the Markdown standard.               |
++-----------------------+-------------------------------------------------------+
+| ``no_intra_emphasis`` | Do not parse emphasis inside of words. Strings such   |
+|                       | as ``foo_bar_baz`` will not generate ``<em>`` tags.   |
 +-----------------------+-------------------------------------------------------+
 | ``space_headers``     | A space is always required between the hash at the    |
 |                       | beginning of a header and its name, e.g.              |
@@ -97,14 +97,14 @@ arguments, all of which default to False:
 +-----------------------+-------------------------------------------------------+
 | ``tables``            | Parse `PHP-Markdown tables`_.                         |
 +-----------------------+-------------------------------------------------------+
-| ``escape``            | Escape all HTML tags, regardless of what they are.    |
-+-----------------------+-------------------------------------------------------+
 | ``hard_wrap`` *or*    | Insert HTML ``<br>`` tags inside on paragraphs where  |
 | ``wrap``              | the origin Markdown document had newlines (by         |
 |                       | default, Markdown ignores these newlines).            |
 +-----------------------+-------------------------------------------------------+
 | ``safelink``          | Only generate links for protocols which are           |
 |                       | considered safe.                                      |
++-----------------------+-------------------------------------------------------+
+| ``escape``            | Escape all HTML tags, regardless of what they are.    |
 +-----------------------+-------------------------------------------------------+
 | ``skip_html`` *or*    | Do not allow any user-inputted HTML in the output.    |
 | ``no_html``           |                                                       |
