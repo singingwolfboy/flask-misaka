@@ -128,11 +128,17 @@ arguments, all of which default to False:
 | ``xhtml``             |                                                       |
 +-----------------------+-------------------------------------------------------+
 
-Any option that starts with ``no_`` can also be passed as it's inverse set to
+Any option that starts with ``no_`` can also be passed as its inverse set to
 False. For example, ``no_html=True`` and ``html=False`` have exactly the same
-effect. If there is a conflict as to whether an option should be enabled
-(such as if you pass both ``html=True`` and ``no_html=True``), the option will
-be enabled.
+effect, just as ``no_intra_emphasis=True`` and ``intra_emphasis=False`` have
+exactly the same effect.
+
+.. note::
+    To override an option, you must use exactly the same option name as you used
+    to originally set the option. If you set ``html=False`` as a default, you
+    must override it with ``html=True``: using ``no_html=False`` or
+    ``skip_html=False`` will not work, even though they all refer to the same
+    thing.
 
 .. _Flask: http://flask.pocoo.org/
 .. _Jinja2: http://jinja.pocoo.org/
