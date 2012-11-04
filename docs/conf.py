@@ -99,6 +99,7 @@ html_theme = 'flask_small'
 # documentation.
 html_theme_options = {
     "github_fork": "singingwolfboy/flask-misaka",
+    "index_logo": "logo.png",
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
