@@ -16,6 +16,7 @@ setup(
     description='A pleasant interface between the Flask web framework and the Misaka Markdown parser.',
     zip_safe=False,
     packages=find_packages(),
+    py_modules=['flask_misaka'],
     install_requires=[
         'Flask>=0.7',
         'misaka',
