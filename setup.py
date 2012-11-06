@@ -8,7 +8,7 @@ except ImportError:
 
 setup(
     name='Flask-Misaka',
-    version='0.1',
+    version='0.1.1',
     url='https://github.com/singingwolfboy/flask-misaka/',
     license='MIT',
     author='David Baumgold',
