@@ -1,0 +1,7 @@
+include LICENSE tests.py
+recursive-include docs *
+recursive-exclude docs *.pyc
+recursive-exclude docs *.pyo
+recursive-exclude docs *.DS_Store
+prune docs/_build
+prune docs/_themes/.git
