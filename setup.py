@@ -14,6 +14,7 @@ setup(
     author='David Baumgold',
     author_email='david@davidbaumgold.com',
     description='A pleasant interface between the Flask web framework and the Misaka Markdown parser.',
+    zip_safe=False,
     packages=find_packages(),
     install_requires=[
         'Flask>=0.7',
