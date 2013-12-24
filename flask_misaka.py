@@ -83,7 +83,15 @@ class Misaka(object):
         """
         self.defaults = defaults
         if app:
-            app.jinja_env.filters.setdefault('markdown', self.render)
+            self.init_app(app)
+
+    def init_app(self, app):
+        """
+        Registers the rendering method as template filter.
+
+        :param app: the flask app.
+        """
+        app.jinja_env.filters.setdefault('markdown', self.render)
 
     def render(self, text, **overrides):
         """
@@ -97,4 +105,3 @@ class Misaka(object):
             options = copy(options)
             options.update(overrides)
         return markdown(text, **options)
-
