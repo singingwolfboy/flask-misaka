@@ -19,18 +19,31 @@ Usage
 ----------
 Just import the :func:`markdown` function and use it!
 
+.. code-block:: python
+
   >>> from flask.ext.misaka import markdown
   >>> markdown("A *simple* example.")
   Markup(u'<p>A <em>simple</em> example.</p>\n')
 
 To use Markdown in your templates, you just need to import the :class:`Misaka`
-class and wrap your Flask instance with it::
+class and wrap your Flask instance with it:
+
+.. code-block:: python
 
   from flask import Flask
   from flask.ext.misaka import Misaka
 
   app = Flask(__name__)
   Misaka(app)
+
+or use the `application factory pattern
+<http://flask.pocoo.org/docs/patterns/appfactories/>`_:
+
+.. code-block:: python
+
+  md = Misaka()
+  app = Flask(__name__)
+  md.init_app(app)
 
 And then the ``markdown`` filter will be available in your `Jinja2`_ templates.
 You can pass variables in your template through it:
@@ -54,14 +67,14 @@ API
 .. autofunction:: markdown
 
 .. autoclass:: Misaka
-   :members: __init__, render
+   :members: __init__, init_app, render
 
 Options
 -------
 Misaka is very customizable, and `supports many Markdown extensions
 <http://misaka.61924.nl/api/>`_. Flask-Misaka provides a nicer API for these
-extensions. All functions in the public API accept the following boolean
-arguments, all of which default to False:
+extensions. All functions in the public API (except :py:meth:`Misaka.init_app`)
+accept the following boolean arguments, all of which default to False:
 
 +-----------------------+-------------------------------------------------------+
 | Option Name           | Description                                           |

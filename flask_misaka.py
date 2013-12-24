@@ -89,7 +89,7 @@ class Misaka(object):
         """
         Registers the rendering method as template filter.
 
-        :param app: the flask app.
+        :param app: a :class:`flask.Flask` instance.
         """
         app.jinja_env.filters.setdefault('markdown', self.render)
 
