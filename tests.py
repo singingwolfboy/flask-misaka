@@ -198,3 +198,10 @@ class MarkdownExtensionTests(TestCase):
         self.assertIsInstance(result, Markup)
         self.assertEqual(result, misaka.html(TEST_MD,
             extensions=ext, render_flags=flags))
+
+class FactoryPatternTests(TestCase):
+    def test_init(self):
+        md = Misaka()
+        app2 = Flask(__name__)
+        md.init_app(app2)
+        self.assertIn("markdown", app2.jinja_env.filters)
