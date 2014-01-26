@@ -3,6 +3,7 @@
 .Python
 *.egg
 *.egg-info
+.coverage
 bin
 build
 dist
