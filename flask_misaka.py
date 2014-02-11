@@ -110,7 +110,7 @@ class Misaka(object):
             options = copy(options)
             options.update(overrides)
         
-        if not self.md: # no custom renderer, just use the normal markdown method
+        if not hasattr(self, 'md'): # no custom renderer, just use the normal markdown method
             return markdown(text, **options)
         else: # custom renderer
             return self.md.render(text)
