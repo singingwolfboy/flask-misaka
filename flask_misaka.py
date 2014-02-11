@@ -12,6 +12,7 @@ from misaka import (EXT_AUTOLINK, EXT_FENCED_CODE,  # pyflakes.ignore
     HTML_SKIP_IMAGES, HTML_SKIP_LINKS, HTML_SKIP_STYLE, HTML_SMARTYPANTS,
     HTML_TOC, HTML_TOC_TREE, HTML_USE_XHTML, TABLE_ALIGNMASK, TABLE_ALIGN_C,
     TABLE_ALIGN_L, TABLE_ALIGN_R, TABLE_HEADER)
+from misaka import HtmlRenderer, Markdown
 
 ALIAS_EXT = {
     'autolink': EXT_AUTOLINK,
@@ -76,12 +77,16 @@ def markdown(text, **options):
 
 
 class Misaka(object):
-    def __init__(self, app=None, **defaults):
+    def __init__(self, app=None, renderer=None, **defaults):
         """
         Set the default options for the :meth:`render` method. If you want
         the ``markdown`` template filter to use options, set them here.
         """
         self.defaults = defaults
+        if renderer:
+            ext, rndr = make_flags(**self.defaults)
+            self.md = misaka.Markdown(renderer, ext)
+            
         if app:
             self.init_app(app)
 
@@ -93,7 +98,7 @@ class Misaka(object):
         """
         app.jinja_env.filters.setdefault('markdown', self.render)
 
-    def render(self, text, **overrides):
+    def render(self, text, renderer=None, **overrides):
         """
         Proxies to the :func:`markdown` function, automatically passing any
         defaults set in the :meth:`__init__` method (or overriding them).
@@ -104,4 +109,8 @@ class Misaka(object):
         if overrides:
             options = copy(options)
             options.update(overrides)
-        return markdown(text, **options)
+        
+        if not hasattr(self, 'md'): # no custom renderer, just use the normal markdown method
+            return markdown(text, **options)
+        else: # custom renderer
+            return self.md.render(text)
