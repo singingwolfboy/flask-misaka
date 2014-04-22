@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from flask import Flask, render_template_string, Markup
 from unittest import TestCase
 import mock
@@ -22,34 +23,34 @@ Misaka(app)
 
 @app.route('/a')
 def view_render_inline():
-    s = u"This is ~~restructuredtext~~ *markdown*"
+    s = "This is ~~restructuredtext~~ *markdown*"
     return render_template_string('{{s|markdown}}', s=s)
 
 def test_render_inline():
     client = app.test_client()
     resp = client.open('/a')
-    assert resp.data == u'<p>This is ~~restructuredtext~~ <em>markdown</em></p>\n'
+    assert resp.data == '<p>This is ~~restructuredtext~~ <em>markdown</em></p>\n'
 
 @app.route('/b')
 def view_render_var_block():
-    s = u"This is a *markdown* block"
-    tpl = u'''{% filter markdown %}{{s}}{% endfilter %}'''
+    s = "This is a *markdown* block"
+    tpl = '''{% filter markdown %}{{s}}{% endfilter %}'''
     return render_template_string(tpl, s=s)
 
 def test_render_var_block():
     client = app.test_client()
     resp = client.open('/b')
-    assert resp.data == u'<p>This is a <em>markdown</em> block</p>\n'
+    assert resp.data == '<p>This is a <em>markdown</em> block</p>\n'
 
 @app.route('/c')
 def view_render_in_block():
-    tpl = u'''{% filter markdown %}This is a *markdown* block{% endfilter %}'''
+    tpl = '''{% filter markdown %}This is a *markdown* block{% endfilter %}'''
     return render_template_string(tpl)
 
 def test_render_in_block():
     client = app.test_client()
     resp = client.open('/c')
-    assert resp.data == u'<p>This is a <em>markdown</em> block</p>\n'
+    assert resp.data == '<p>This is a <em>markdown</em> block</p>\n'
 
 ### markdown extensions in templates
 
@@ -59,13 +60,13 @@ Misaka(extapp, strikethrough=True)
 
 @extapp.route('/d')
 def view_render_inline_ext():
-    s = u"This is ~~restructuredtext~~ *markdown*"
+    s = "This is ~~restructuredtext~~ *markdown*"
     return render_template_string('{{s|markdown}}', s=s)
 
 def test_render_inline_ext():
     client = extapp.test_client()
     resp = client.open('/d')
-    assert resp.data == u'<p>This is <del>restructuredtext</del> <em>markdown</em></p>\n'
+    assert resp.data == '<p>This is <del>restructuredtext</del> <em>markdown</em></p>\n'
 
 # Note that the Markdown extension tests aren't actually testing that the
 # Markdown is rendered correctly; that should be covered by the test suite of
