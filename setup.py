@@ -8,7 +8,7 @@ except ImportError:
 
 setup(
     name='Flask-Misaka',
-    version='0.2.0',
+    version='0.3.0',
     url='https://github.com/singingwolfboy/flask-misaka/',
     license='MIT',
     author='David Baumgold',
@@ -27,11 +27,16 @@ setup(
         'mock',
     ],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
         'Environment :: Web Environment',
+        'Framework :: Flask',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Topic :: Software Development :: Libraries :: Python Modules'
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 )
