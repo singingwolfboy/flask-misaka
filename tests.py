@@ -148,10 +148,20 @@ class MarkdownExtensionTests(TestCase):
         self.assertEqual(result, misaka.html(TEST_MD,
             extensions=ext, render_flags=flags))
 
-    def test_inverse(self, html):
+    def test_inverse_ext(self, html):
         ext, flags = EXT_NO_INTRA_EMPHASIS, 0
 
         result = markdown(TEST_MD, intra_emphasis=False)
+
+        html.assert_called_with(TEST_MD, extensions=ext, render_flags=flags)
+        self.assertIsInstance(result, Markup)
+        self.assertEqual(result, misaka.html(TEST_MD,
+            extensions=ext, render_flags=flags))
+
+    def test_inverse_render(self, html):
+        ext, flags = 0, HTML_SKIP_STYLE
+
+        result = markdown(TEST_MD, style=False)
 
         html.assert_called_with(TEST_MD, extensions=ext, render_flags=flags)
         self.assertIsInstance(result, Markup)
