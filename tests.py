@@ -29,7 +29,7 @@ def view_render_inline():
 def test_render_inline():
     client = app.test_client()
     resp = client.open('/a')
-    assert resp.data == '<p>This is ~~restructuredtext~~ <em>markdown</em></p>\n'
+    assert resp.data == b'<p>This is ~~restructuredtext~~ <em>markdown</em></p>\n'
 
 @app.route('/b')
 def view_render_var_block():
@@ -40,7 +40,7 @@ def view_render_var_block():
 def test_render_var_block():
     client = app.test_client()
     resp = client.open('/b')
-    assert resp.data == '<p>This is a <em>markdown</em> block</p>\n'
+    assert resp.data == b'<p>This is a <em>markdown</em> block</p>\n'
 
 @app.route('/c')
 def view_render_in_block():
@@ -50,7 +50,7 @@ def view_render_in_block():
 def test_render_in_block():
     client = app.test_client()
     resp = client.open('/c')
-    assert resp.data == '<p>This is a <em>markdown</em> block</p>\n'
+    assert resp.data == b'<p>This is a <em>markdown</em> block</p>\n'
 
 ### markdown extensions in templates
 
@@ -66,7 +66,7 @@ def view_render_inline_ext():
 def test_render_inline_ext():
     client = extapp.test_client()
     resp = client.open('/d')
-    assert resp.data == '<p>This is <del>restructuredtext</del> <em>markdown</em></p>\n'
+    assert resp.data == b'<p>This is <del>restructuredtext</del> <em>markdown</em></p>\n'
 
 # Note that the Markdown extension tests aren't actually testing that the
 # Markdown is rendered correctly; that should be covered by the test suite of
