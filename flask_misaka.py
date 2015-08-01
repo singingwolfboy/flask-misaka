@@ -66,21 +66,33 @@ def make_flags(**options):
     return ext, rndr
 
 
-def markdown(text, **options):
+def markdown(text, renderer=None, **options):
     """
     Parses the provided Markdown-formatted text into valid HTML, and returns
     it as a :class:`flask.Markup` instance.
+
+    :param text: Markdown-formatted text to be rendered into HTML
+    :param renderer: A custom misaka renderer to be used instead of the default one
+    :param options: Additional options for customizing the default renderer
+    :return: A :class:`flask.Markup` instance representing the rendered text
     """
     ext, rndr = make_flags(**options)
-    return Markup(misaka.html(text, extensions=ext, render_flags=rndr))
+    if renderer:
+        return Markup(misaka.Markdown(renderer, ext).render(text))
+    else:
+        return Markup(misaka.html(text, extensions=ext, render_flags=rndr))
 
 
 class Misaka(object):
-    def __init__(self, app=None, **defaults):
+    def __init__(self, app=None, renderer=None, **defaults):
         """
         Set the default options for the :meth:`render` method. If you want
         the ``markdown`` template filter to use options, set them here.
+
+        A custom misaka renderer can be specified to be used instead of the
+        default one.
         """
+        self.renderer = renderer
         self.defaults = defaults
         if app:
             self.init_app(app)
@@ -95,13 +107,17 @@ class Misaka(object):
 
     def render(self, text, **overrides):
         """
-        Proxies to the :func:`markdown` function, automatically passing any
-        defaults set in the :meth:`__init__` method (or overriding them).
+        It delegates to the :func:`markdown` function, passing any default
+        options or renderer set in the :meth:`__init__` method.
 
         The ``markdown`` template filter calls this method.
+
+        :param text: Markdown-formatted text to be rendered to HTML
+        :param overrides: Additional options which may override the defaults
+        :return: A :class:`flask.Markup` instance representing the rendered text
         """
         options = self.defaults
         if overrides:
             options = copy(options)
             options.update(overrides)
-        return markdown(text, **options)
+        return markdown(text, self.renderer, **options)

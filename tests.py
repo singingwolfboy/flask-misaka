@@ -210,6 +210,18 @@ class MarkdownExtensionTests(TestCase):
         self.assertEqual(result, misaka.html(TEST_MD,
             extensions=ext, render_flags=flags))
 
+    def test_custom_renderer(self, html):
+        ext, flags = 0, 0
+        app = None
+        renderer = misaka.HtmlRenderer()
+
+        md = Misaka(app, renderer)
+        result = md.render(TEST_MD)
+
+        self.assertFalse(html.called)
+        self.assertEqual(result, misaka.html(TEST_MD,
+            extensions=ext, render_flags=flags))
+
 class FactoryPatternTests(TestCase):
     def test_init(self):
         md = Misaka()
