@@ -1,4 +1,4 @@
-# Flask-Misaka [![Build Status](https://travis-ci.org/singingwolfboy/flask-misaka.png)](https://travis-ci.org/singingwolfboy/flask-misaka)  [![Coverage Status](https://coveralls.io/repos/singingwolfboy/flask-misaka/badge.png)](https://coveralls.io/r/singingwolfboy/flask-misaka)
+# Flask-Misaka [![Build Status](https://travis-ci.org/singingwolfboy/flask-misaka.png)](https://travis-ci.org/singingwolfboy/flask-misaka)  [![Coverage Status](http://codecov.io/github/singingwolfboy/flask-misaka/coverage.svg?branch=master)](http://codecov.io/github/singingwolfboy/flask-misaka?branch=master)
 
 A simple Flask extension to integrate the [Misaka](http://misaka.61924.nl)
 module, which is a Python interface to the excellent
