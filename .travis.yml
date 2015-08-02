@@ -4,8 +4,8 @@ python:
   - "3.3"
 install:
   - python setup.py install
-  - pip install coverage coveralls --use-mirrors
+  - pip install codecov
 script:
   - coverage run --source=flask_misaka setup.py test
 after_success:
-  - coveralls
+  - codecov
