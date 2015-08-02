@@ -19,7 +19,7 @@ setup(
     py_modules=['flask_misaka'],
     install_requires=[
         'Flask>=0.7',
-        'misaka',
+        'misaka<2.0',
     ],
     test_suite='nose.collector',
     tests_require=[
