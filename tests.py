@@ -211,16 +211,19 @@ class MarkdownExtensionTests(TestCase):
             extensions=ext, render_flags=flags))
 
     def test_custom_renderer(self, html):
-        ext, flags = 0, 0
-        app = None
-        renderer = misaka.HtmlRenderer()
 
-        md = Misaka(app, renderer)
-        result = md.render(TEST_MD)
+        class CustomRenderer(misaka.HtmlRenderer):
+            def image(self, link, title, alt_text):
+                return '<div><img src="{0}" alt="{2}" title="{1}"><div>{1}</div></div>'.format(
+                    link, title, alt_text)
 
+        test_md = '![Alt text](/img.jpg "Title")'
+        expected_result = '<p><div><img src="/img.jpg" alt="Alt text" title="Title"><div>Title</div></div></p>\n'
+
+        md = Misaka(None, CustomRenderer())
+        result = md.render(test_md)
         self.assertFalse(html.called)
-        self.assertEqual(result, misaka.html(TEST_MD,
-            extensions=ext, render_flags=flags))
+        self.assertEqual(str(result), expected_result)
 
 class FactoryPatternTests(TestCase):
     def test_init(self):
