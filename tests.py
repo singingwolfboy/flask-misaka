@@ -167,6 +167,16 @@ class MarkdownExtensionTests(TestCase):
         self.assertEqual(result, misaka.html(TEST_MD,
             extensions=ext, render_flags=flags))
 
+    def test_inverse_render(self, html):
+        ext, flags = 0, HTML_SKIP_HTML
+
+        result = markdown(TEST_MD, no_html=True)
+
+        html.assert_called_with(TEST_MD, extensions=ext, render_flags=flags)
+        self.assertIsInstance(result, Markup)
+        self.assertEqual(result, misaka.html(TEST_MD,
+            extensions=ext, render_flags=flags))
+
     def test_undefined_option(self, html):
         ext, flags = 0, 0
 
