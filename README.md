@@ -2,7 +2,7 @@
 
 A simple Flask extension to integrate the [Misaka](http://misaka.61924.nl)
 module, which is a Python interface to the excellent
-[Sundown](https://github.com/vmg/sundown) markdown-parsing library.
+[Hoedown](hhttps://github.com/hoedown/hoedown) markdown-parsing library. Check the [changlog](http://misaka.61924.nl/changelog.html) for Misaka to keep up with new features.
 
 The full documentation for this project is built using Sphinx; you can also
 check out [a pre-built version hosted on RTD](https://flask-misaka.readthedocs.org/en/latest/).
