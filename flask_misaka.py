@@ -25,6 +25,7 @@ ALIAS_EXT = {
     'underline': EXT_UNDERLINE,
     'math_explicit': EXT_MATH_EXPLICIT,
     'disable_indented_code': EXT_DISABLE_INDENTED_CODE,
+    'no_indented_code': EXT_DISABLE_INDENTED_CODE,
     'highlight': EXT_HIGHLIGHT,
     'quote': EXT_QUOTE
 }
@@ -71,6 +72,8 @@ def markdown(text, renderer=None, **options):
     :return: A :class:`flask.Markup` instance representing the rendered text
     """
     ext, rndr = make_flags(**options)
+    if options.get("smartypants"):
+        text = misaka.smartypants(text)
     if renderer:
         md = misaka.Markdown(renderer,ext)
         return Markup(md(text))

@@ -1,7 +1,7 @@
 Flask-Misaka
 ============
 
-.. module:: flask.ext.misaka
+.. module:: flask_misaka
 
 Flask-Misaka provides a pleasant interface between the `Flask`_ web framework
 and the `Misaka`_ `Markdown`_ parser. [#technically]_
@@ -76,70 +76,86 @@ Misaka is very customizable, and `supports many Markdown extensions
 extensions. All functions in the public API (except :py:meth:`Misaka.init_app`)
 accept the following boolean arguments, all of which default to False:
 
-+-----------------------+-------------------------------------------------------+
-| Option Name           | Description                                           |
-+=======================+=======================================================+
-| ``autolink``          | Parse links even when they are not enclosed in ``<>`` |
-|                       | characters. Autolinks for the http, https and ftp     |
-|                       | protocols will be automatically detected. Email       |
-|                       | addresses are also handled, and http links without    |
-|                       | protocol, but starting with ``www``.                  |
-+-----------------------+-------------------------------------------------------+
-| ``fenced_code``       | Blocks delimited with 3 or more ``~`` or backticks    |
-|                       | will be considered as code, without the need to be    |
-|                       | indented. An optional language name may be added at   |
-|                       | the end of the opening fence for the code block.      |
-+-----------------------+-------------------------------------------------------+
-| ``lax_html`` *or*     | HTML blocks do not require to be surrounded by an     |
-| ``lax_html_blocks``   | empty line as in the Markdown standard.               |
-+-----------------------+-------------------------------------------------------+
-| ``no_intra_emphasis`` | Do not parse emphasis inside of words. Strings such   |
-|                       | as ``foo_bar_baz`` will not generate ``<em>`` tags.   |
-+-----------------------+-------------------------------------------------------+
-| ``space_headers``     | A space is always required between the hash at the    |
-|                       | beginning of a header and its name, e.g.              |
-|                       | ``#this is my header`` would not be a valid header.   |
-+-----------------------+-------------------------------------------------------+
-| ``strikethrough``     | Two ``~`` characters mark the start of a              |
-|                       | strikethrough, e.g. ``this is ~~good~~ bad``.         |
-+-----------------------+-------------------------------------------------------+
-| ``superscript``       | Parse superscripts after the ``^`` character;         |
-|                       | contiguous superscripts are nested together, and      |
-|                       | complex values can be enclosed in parenthesis, e.g.   |
-|                       | ``this is the 2^(nd) time``.                          |
-+-----------------------+-------------------------------------------------------+
-| ``tables``            | Parse `PHP-Markdown tables`_.                         |
-+-----------------------+-------------------------------------------------------+
-| ``hard_wrap`` *or*    | Insert HTML ``<br>`` tags inside on paragraphs where  |
-| ``wrap``              | the origin Markdown document had newlines (by         |
-|                       | default, Markdown ignores these newlines).            |
-+-----------------------+-------------------------------------------------------+
-| ``safelink``          | Only generate links for protocols which are           |
-|                       | considered safe.                                      |
-+-----------------------+-------------------------------------------------------+
-| ``escape``            | Escape all HTML tags, regardless of what they are.    |
-+-----------------------+-------------------------------------------------------+
-| ``skip_html`` *or*    | Do not allow any user-inputted HTML in the output.    |
-| ``no_html``           |                                                       |
-+-----------------------+-------------------------------------------------------+
-| ``skip_images`` *or*  | Do not generate any ``<img>`` tags.                   |
-| ``no_images``         |                                                       |
-+-----------------------+-------------------------------------------------------+
-| ``skip_links`` *or*   | Do not generate any ``<a>`` tags.                     |
-| ``no_links``          |                                                       |
-+-----------------------+-------------------------------------------------------+
-| ``skip_style`` *or*   | Do not generate any ``<style>`` tags.                 |
-| ``no_style``          |                                                       |
-+-----------------------+-------------------------------------------------------+
-| ``smartypants``       | Post-process rendered markdown text with              |
-|                       | `SmartyPants`_.                                       |
-+-----------------------+-------------------------------------------------------+
-| ``toc`` *or*          | Render a table of contents.                           |
-| ``toc_tree``          |                                                       |
-+-----------------------+-------------------------------------------------------+
-| ``use_xhtml`` *or*    | Output XHTML-conformant tags.                         |
-| ``xhtml``             |                                                       |
-+-----------------------+-------------------------------------------------------+
+.. list-table:: Flask-Misaka options
+    :header-rows: 1
+
+    * - Option Name
+      - Description
+
+    * - ``autolink``
+      - Parse links even when they are not enclosed in ``<>`` characters.
+        Autolinks for the http, https and ftp protocols will be automatically
+        detected. Email addresses are also handled, and http links without
+        protocol, but starting with ``www``.
+
+    * - ``fenced_code``
+      - Blocks delimited with 3 or more ``~`` or backticks will be considered
+        as code, without the need to be indented. An optional language name
+        may be added at the end of the opening fence for the code block.
+
+    * - ``underline``
+      - Treat text surrounded by underscores (like ``_this_``) as underlined,
+        rather than emphasized.
+
+    * - ``highlight``
+      - Treat text surrounded by double equal signs (like ``==this==``)
+        as highlighted.
+
+    * - ``quote``
+      - Parse inline quotes (like ``"this"``). This allows the renderer to
+        control how they are rendered.
+
+    * - ``math``
+      - Parse inline LaTeX-style math blocks (like ``$$this$$``).
+
+    * - ``math_explicit``
+      - Parse inline LaTeX-style math blocks with a single dollar, e.g.
+        ``$x + y = 3$``
+
+    * - ``disable_indented_code`` or ``no_indented_code``
+      - Ignore indented code blocks
+
+    * - ``no_intra_emphasis``
+      - Do not parse emphasis inside of words. Strings such as ``foo_bar_baz``
+        will not generate ``<em>`` tags.
+
+    * - ``space_headers``
+      - A space is always required between the hash at the beginning of
+        a header and its name, e.g. ``#this is my header`` would not be
+        a valid header.
+
+    * - ``strikethrough``
+      - Two ``~`` characters mark the start of a strikethrough, e.g.
+        ``this is ~~good~~ bad``.
+
+    * - ``superscript``
+      - Parse superscripts after the ``^`` character; contiguous superscripts
+        are nested together, and complex values can be enclosed in parenthesis,
+        e.g. ``this is the 2^(nd) time``.
+
+    * - ``tables``
+      - Parse `PHP-Markdown tables`_.
+
+    * - ``hard_wrap`` *or* ``wrap``
+      - Insert HTML ``<br>`` tags inside on paragraphs where the origin
+        Markdown document had newlines (by default, Markdown
+        ignores these newlines).
+
+    * - ``footnotes``
+      - Parse Markdown footnotes.
+
+    * - ``escape``
+      - Escape all HTML tags, regardless of what they are.
+
+    * - ``skip_html`` *or* ``no_html``
+      - Do not allow any user-inputted HTML in the output.
+
+    * - ``use_xhtml`` *or* ``xhtml``
+      - Output XHTML-conformant tags.
+
+    * - ``smartypants``
+      - Post-process rendered markdown text with `SmartyPants`_.
+
 
 Any option that starts with ``no_`` can also be passed as its inverse set to
 False. For example, ``no_html=True`` and ``html=False`` have exactly the same
@@ -157,11 +173,12 @@ exactly the same effect.
 .. _Jinja2: http://jinja.pocoo.org/
 .. _Misaka: http://misaka.61924.nl/
 .. _Markdown: http://en.wikipedia.org/wiki/Markdown
-.. _Sundown: https://github.com/vmg/sundown
+.. _Hoedown: https://github.com/hoedown/hoedown
 .. _PHP-Markdown tables: http://michelf.com/projects/php-markdown/extra/#table
 .. _SmartyPants: http://daringfireball.net/projects/smartypants/
+.. _inline LaTex-style math: https://github.com/bhollis/maruku/blob/master/docs/math.md
 
 .. rubric:: Footnotes
 .. [#technically]
-  (Technically, `Misaka`_ is just a Python binding to the `Sundown`_ library,
+  (Technically, `Misaka`_ is just a Python binding to the `Hoedown`_ library,
   which is written in C.)
