@@ -234,6 +234,18 @@ class MarkdownExtensionTests(TestCase):
         self.assertFalse(html.called)
         self.assertEqual(str(result), expected_result)
 
+    def test_smartypants(self, html):
+        text = "Don't call me Shirley"
+        pantsed = "Don&rsquo;t call me Shirley"
+        expected_result = "<p>Don&rsquo;t call me Shirley</p>\n"
+
+        md = Misaka(smartypants=True)
+        result = md.render(text)
+
+        html.assert_called_with(pantsed, extensions=0, render_flags=0)
+        self.assertIsInstance(result, Markup)
+        self.assertEqual(result, expected_result)
+
 
 class FactoryPatternTests(TestCase):
     def test_init(self):
