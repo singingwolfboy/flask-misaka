@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+__version__ = '0.4.1'
+
 import misaka
 from flask import Markup
 from copy import copy

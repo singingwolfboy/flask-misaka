@@ -1,14 +1,17 @@
+import re
 from setuptools import setup, find_packages
 
-# http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage
-try:
-    from multiprocessing import util # pyflakes.ignore
-except ImportError:
-    pass
+version = ''
+with open('flask_misaka.py', 'r') as fd:
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
+                        fd.read(), re.MULTILINE).group(1)
+
+if not version:
+    raise RuntimeError('Cannot find version information')
 
 setup(
     name='Flask-Misaka',
-    version='0.4.0',
+    version=version,
     url='https://github.com/singingwolfboy/flask-misaka/',
     license='MIT',
     author='David Baumgold',
