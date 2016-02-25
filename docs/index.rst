@@ -36,8 +36,7 @@ class and wrap your Flask instance with it:
   app = Flask(__name__)
   Misaka(app)
 
-or use the `application factory pattern
-<http://flask.pocoo.org/docs/patterns/appfactories/>`_:
+or use the :ref:`application factory pattern <flask:app-factories>`:
 
 .. code-block:: python
 
@@ -72,7 +71,7 @@ API
 Options
 -------
 Misaka is very customizable, and `supports many Markdown extensions
-<http://misaka.61924.nl/api/>`_. Flask-Misaka provides a nicer API for these
+<http://misaka.61924.nl/#extensions>`_. Flask-Misaka provides a nicer API for these
 extensions. All functions in the public API (except :py:meth:`Misaka.init_app`)
 accept the following boolean arguments, all of which default to False:
 
