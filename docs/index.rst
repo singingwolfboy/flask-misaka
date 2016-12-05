@@ -153,7 +153,7 @@ accept the following boolean arguments, all of which default to False:
       - Output XHTML-conformant tags.
 
     * - ``smartypants``
-      - Post-process rendered markdown text with `SmartyPants`_.
+      - Pre-process rendered markdown text with `SmartyPants`_.
 
 
 Any option that starts with ``no_`` can also be passed as its inverse set to
