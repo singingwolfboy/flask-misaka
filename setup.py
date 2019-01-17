@@ -1,5 +1,10 @@
+import sys
 import re
 from setuptools import setup, find_packages
+
+tests_require = []
+if sys.version_info[0] < 3:
+    tests_require = ['mock']
 
 version = ''
 with open('flask_misaka.py', 'r') as fd:
@@ -24,11 +29,8 @@ setup(
         'Flask>=0.7',
         'misaka>=2.0,<3.0',
     ],
-    test_suite='nose.collector',
-    tests_require=[
-        'nose>=1.0',
-        'mock',
-    ],
+    test_suite='tests',
+    tests_require=tests_require,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python',
