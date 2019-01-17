@@ -74,13 +74,14 @@ def markdown(text, renderer=None, **options):
     :return: A :class:`flask.Markup` instance representing the rendered text
     """
     ext, rndr = make_flags(**options)
-    if options.get("smartypants"):
-        text = misaka.smartypants(text)
     if renderer:
         md = misaka.Markdown(renderer,ext)
-        return Markup(md(text))
+        result = md(text)
     else:
-        return Markup(misaka.html(text, extensions=ext, render_flags=rndr))
+        result = misaka.html(text, extensions=ext, render_flags=rndr)
+    if options.get("smartypants"):
+        result = misaka.smartypants(result)
+    return Markup(result)
 
 
 class Misaka(object):

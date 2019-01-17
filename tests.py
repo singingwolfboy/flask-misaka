@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from flask import Flask, render_template_string, Markup
 from unittest import TestCase
+from textwrap import dedent
 try:
     import mock
 except ImportError:
@@ -239,15 +240,77 @@ class MarkdownExtensionTests(TestCase):
 
     def test_smartypants(self, html):
         text = "Don't call me Shirley"
-        pantsed = "Don&rsquo;t call me Shirley"
         expected_result = "<p>Don&rsquo;t call me Shirley</p>\n"
 
         md = Misaka(smartypants=True)
         result = md.render(text)
 
-        html.assert_called_with(pantsed, extensions=0, render_flags=0)
         self.assertIsInstance(result, Markup)
         self.assertEqual(result, expected_result)
+
+    def test_smartypants_table(self, html):
+        "smartypants should not interfere with processing tables"
+
+        text = dedent("""
+            | Left align | Right align | Center align |
+            |:-----------|------------:|:------------:|
+            | This       |        This |     This     |
+            | column     |      column |    column    |
+            | will       |        will |     will     |
+            | be         |          be |      be      |
+            | left       |       right |    center    |
+            | aligned    |     aligned |    aligned   |
+        """)
+        expected_result = dedent("""
+            <table>
+            <thead>
+            <tr>
+            <th style="text-align: left">Left align</th>
+            <th style="text-align: right">Right align</th>
+            <th style="text-align: center">Center align</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+            <td style="text-align: left">This</td>
+            <td style="text-align: right">This</td>
+            <td style="text-align: center">This</td>
+            </tr>
+            <tr>
+            <td style="text-align: left">column</td>
+            <td style="text-align: right">column</td>
+            <td style="text-align: center">column</td>
+            </tr>
+            <tr>
+            <td style="text-align: left">will</td>
+            <td style="text-align: right">will</td>
+            <td style="text-align: center">will</td>
+            </tr>
+            <tr>
+            <td style="text-align: left">be</td>
+            <td style="text-align: right">be</td>
+            <td style="text-align: center">be</td>
+            </tr>
+            <tr>
+            <td style="text-align: left">left</td>
+            <td style="text-align: right">right</td>
+            <td style="text-align: center">center</td>
+            </tr>
+            <tr>
+            <td style="text-align: left">aligned</td>
+            <td style="text-align: right">aligned</td>
+            <td style="text-align: center">aligned</td>
+            </tr>
+            </tbody>
+            </table>
+        """)
+
+        md = Misaka(tables=True, smartypants=True)
+        result = md.render(text).strip()
+
+        self.assertIsInstance(result, Markup)
+        self.assertEqual(result.strip(), expected_result.strip())
 
 
 class FactoryPatternTests(TestCase):
