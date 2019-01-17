@@ -2,6 +2,7 @@
 *.DS_Store
 .Python
 *.egg
+*.eggs
 *.egg-info
 .coverage
 bin

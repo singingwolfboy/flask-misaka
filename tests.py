@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
 from flask import Flask, render_template_string, Markup
 from unittest import TestCase
-import mock
+try:
+    import mock
+except ImportError:
+    from unittest import mock
 
 import misaka
 from misaka import (EXT_AUTOLINK, EXT_FENCED_CODE,  # pyflakes.ignore
@@ -83,7 +86,7 @@ def test_render_inline_ext():
 # the misaka module correctly, and returning the result unmodified
 # (aside from being wrapped in a Markup class instance.)
 
-@mock.patch("flask.ext.misaka.misaka.html", side_effect=misaka.html)
+@mock.patch("flask_misaka.misaka.html", side_effect=misaka.html)
 class MarkdownExtensionTests(TestCase):
     def test_defaults(self, html):
         ext, flags = 0, 0
