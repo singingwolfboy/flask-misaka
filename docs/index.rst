@@ -21,7 +21,7 @@ Just import the :func:`markdown` function and use it!
 
 .. code-block:: python
 
-  >>> from flask.ext.misaka import markdown
+  >>> from flask_misaka import markdown
   >>> markdown("A *simple* example.")
   Markup(u'<p>A <em>simple</em> example.</p>\n')
 
@@ -31,7 +31,7 @@ class and wrap your Flask instance with it:
 .. code-block:: python
 
   from flask import Flask
-  from flask.ext.misaka import Misaka
+  from flask_misaka import Misaka
 
   app = Flask(__name__)
   Misaka(app)
