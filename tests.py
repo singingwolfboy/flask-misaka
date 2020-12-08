@@ -3,9 +3,9 @@ from flask import Flask, render_template_string, Markup
 from unittest import TestCase
 from textwrap import dedent
 try:
-    import mock
-except ImportError:
     from unittest import mock
+except ImportError:
+    import mock
 
 import misaka
 from misaka import (EXT_AUTOLINK, EXT_FENCED_CODE,  # pyflakes.ignore
