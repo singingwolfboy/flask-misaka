@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 tests_require = ['Flask']
 if sys.version_info[0] < 3:
-    tests_require = ['mock']
+    tests_require.append('mock')
 
 version = ''
 with open('flask_misaka.py', 'r') as fd:
