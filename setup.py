@@ -2,9 +2,9 @@ import sys
 import re
 from setuptools import setup, find_packages
 
-tests_require = []
+tests_require = ['Flask']
 if sys.version_info[0] < 3:
-    tests_require = ['mock']
+    tests_require.append('mock')
 
 version = ''
 with open('flask_misaka.py', 'r') as fd:
@@ -26,7 +26,7 @@ setup(
     packages=find_packages(),
     py_modules=['flask_misaka'],
     install_requires=[
-        'Flask>=0.7',
+        'markupsafe',
         'misaka>=2.0,<3.0',
     ],
     test_suite='tests',

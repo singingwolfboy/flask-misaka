@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["2.x", "3.x"]
+        python-version: ["3.x"]
     name: "pytest: Python ${{ matrix.python-version }}"
 
     steps:
@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Install setuptools
+        run: pip install setuptools
 
       - name: Install dependencies
         run: >-
