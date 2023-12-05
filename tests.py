@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
-from flask import Flask, render_template_string, Markup
+from flask import Flask, render_template_string
+from markupsafe import Markup
 from unittest import TestCase
 from textwrap import dedent
 try:

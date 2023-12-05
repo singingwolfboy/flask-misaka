@@ -1,2 +1,2 @@
-Flask>=0.7
+markupsafe
 misaka>=2.0,<3.0
