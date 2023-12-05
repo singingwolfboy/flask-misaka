@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install setuptools
+        run: pip install setuptools
+
       - name: Install dependencies
         run: >-
           pip install
